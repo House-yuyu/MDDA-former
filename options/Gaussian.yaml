@@ -1,0 +1,25 @@
+# Training configuration
+VERBOSE: True
+
+MODEL:
+  MODE: 'Gaussian'
+
+# Optimization arguments.
+OPTIM:
+  EPOCHS: 200  # 600K
+  LR_INITIAL: 2e-4   # 2e-4 or 4
+  LR_MIN: 1e-6
+  betas: [0.9, 0.999]
+  weight_decay: 0.02
+
+  type: AdamW
+  loss: 3+
+  Scheduler: cosine
+
+TRAINING:
+  RESUME: False   # False or True
+  TRAIN_PS: [128,128]
+  VAL_PS: [256,256]
+  TRAIN_DIR: '../data/Denoise/train/Gaussian'    # path to training data
+  VAL_DIR: '../data/Denoise/val/Gaussian'        # path to validation data
+  SAVE_DIR: '../checkpoints'           # path to save models and images

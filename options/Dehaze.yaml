@@ -1,0 +1,29 @@
+# Training configuration
+VERBOSE: True
+
+MODEL:
+  MODE: 'Dehazing'
+
+# Optimization arguments.
+OPTIM:
+  EPOCHS: 800 #  600K
+  LR_INITIAL: 2e-4
+  LR_MIN: 1e-6
+  betas: [0.9, 0.999]
+  weight_decay: 0.02
+
+  type: AdamW
+  loss: 3+
+  Scheduler: cosine
+
+TRAINING:
+  VAL_AFTER_EVERY: 5
+  RESUME: true   # false or true
+
+  train_hazy_path: '../data/Dehaze/Haze4K/train_patch/input'    # path to training data
+  train_clear_path: '../data/Dehaze/Haze4K/train_patch/target'
+
+  val_hazy_path: '../data/Dehaze/Haze4K/test/input'    # path to training data
+  val_clear_path: '../data/Dehaze/Haze4K/test/target'
+
+  SAVE_DIR: '../checkpoints'           # path to save models and images

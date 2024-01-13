@@ -1,0 +1,26 @@
+# Training configuration
+VERBOSE: True
+
+MODEL:
+  MODE: 'Low_light'
+
+# Optimization arguments.
+OPTIM:
+  EPOCHS: 1150 #  200K
+  LR_INITIAL: 2e-4
+  LR_MIN: 1e-6
+  betas: [0.9, 0.999]
+  weight_decay: 0.02
+
+  type: AdamW
+  loss: 3+
+  Scheduler: cosine
+
+TRAINING:
+  VAL_AFTER_EVERY: 5
+  RESUME: false   # false or true
+  TRAIN_PS: [400, 600]  #  128 for ablation study, 256 is normal
+  VAL_PS: [400, 600]    # 256
+  TRAIN_DIR: '../data/Low_light/LOL_v2/train'    # path to training data
+  VAL_DIR: '../data/Low_light/LOL_v2/test'        # path to validation data
+  SAVE_DIR: '../checkpoints'           # path to save models and images
