@@ -5,19 +5,16 @@ from pdb import set_trace as stx
 import numbers
 from einops import rearrange
 import math
-from ptflops import get_model_complexity_info
-
 import sys
+
 sys.path.append("..")
 from utils.odconv import ODConv2d
-# from mmcv.ops.carafe import CARAFEPack
-
 
 def odconv3x3(in_planes, out_planes, stride=1, reduction=0.25, kernel_num=1):
     return ODConv2d(in_planes, out_planes, kernel_size=3, stride=stride, padding=1,
                     reduction=reduction, kernel_num=kernel_num)
 
-##########################################################################
+
 class LayerNormFunction(torch.autograd.Function):
     @staticmethod
     def forward(ctx, x, weight, bias, eps):
@@ -62,12 +59,11 @@ class SimpleGate(nn.Module):
         return x1 * x2
 
 
-## Multi-DConv Head Transposed Self-Attention (MDTA)
 class Attention(nn.Module):
     def __init__(self, dim, num_heads):
         super(Attention, self).__init__()
         self.num_heads = num_heads
-        self.temperature = nn.Parameter(torch.ones(num_heads, 1, 1))  # 缩放因子
+        self.temperature = nn.Parameter(torch.ones(num_heads, 1, 1))  
 
         self.qkv = nn.Conv2d(dim, dim * 3, kernel_size=1, bias=False)
         self.qkv_dwconv = nn.Conv2d(dim * 3, dim * 3, kernel_size=3, stride=1, padding=1, groups=dim * 3, bias=False)
@@ -77,7 +73,7 @@ class Attention(nn.Module):
         b, c, h, w = x.shape
 
         qkv = self.qkv_dwconv(self.qkv(x))
-        q, k, v = qkv.chunk(3, dim=1)  # 对张量沿第2个维度分3块，返回一个张量列表
+        q, k, v = qkv.chunk(3, dim=1)  
 
         q = rearrange(q, 'b (head c) h w -> b head c (h w)', head=self.num_heads)
         k = rearrange(k, 'b (head c) h w -> b head c (h w)', head=self.num_heads)
@@ -97,7 +93,6 @@ class Attention(nn.Module):
         return out
 
 
-##########################################################################
 class TransformerBlock(nn.Module):
     """
     All bias set false
@@ -125,7 +120,7 @@ class TransformerBlock(nn.Module):
         y = self.beta * x + self.attn(self.norm1(x))  # rescale
 
         y = self.conv_ff1(self.norm2(y))
-        y = self.dwconv(y)   # 另外加的
+        y = self.dwconv(y)   
         y = self.sg(y)
         y = self.gamma * y + self.conv_ff2(x)
 
@@ -175,71 +170,6 @@ class Localcnn_block(nn.Module):
         return y
 
 
-# class Fusion_adaptive(nn.Module):
-#     def __init__(self, height=2, bias=False, k_size=3):
-#         super(Fusion_adaptive, self).__init__()
-#
-#         self.height = height  # multi path
-#         self.k_size = k_size
-#
-#         self.avg_pool = nn.AdaptiveAvgPool2d(1)
-#         self.conv = nn.Conv1d(1, 1, kernel_size=k_size, padding=(k_size - 1) // 2, bias=bias)
-#
-#         self.softmax = nn.Softmax(dim=1)
-#
-#     def forward(self, inp_feats):
-#         batch_size = inp_feats[0].shape[0]
-#         n_feats = inp_feats[0].shape[1]
-#
-#         inp_feats = torch.cat(inp_feats, dim=1)
-#         inp_feats = inp_feats.view(batch_size, self.height, n_feats, inp_feats.shape[2],
-#                                    inp_feats.shape[3])  # b,4,c,h,w
-#
-#         feats_sum = torch.sum(inp_feats, dim=1)
-#         feats_S = self.avg_pool(feats_sum)
-#
-#         feats_Z = self.conv(feats_S.squeeze(-1).transpose(-1, -2)).transpose(-1, -2).unsqueeze(-1)
-#
-#         attention_vectors = [feats_Z, feats_Z]  # 2
-#         attention_vectors = torch.cat(attention_vectors, dim=1)
-#         attention_vectors = attention_vectors.view(batch_size, self.height, n_feats, 1, 1)
-#
-#         attention_vectors = self.softmax(attention_vectors)  # b,4,c,1,1
-#         feats_out = torch.sum(inp_feats * attention_vectors, dim=1)
-#         out = feats_out + feats_sum
-#
-#         return out
-
-
-# Transformer and Conv Block
-# class ConvTransBlock(nn.Module):
-#     def __init__(self, dim, num_heads, ffn_expansion_factor):
-#         super(ConvTransBlock, self).__init__()
-#         self.dim = dim
-#
-#         self.trans_block = TransformerBlock(self.dim//2, num_heads, ffn_expansion_factor)
-#
-#         self.conv1 = nn.Conv2d(dim, dim, 1, 1, 0, bias=True)
-#         self.conv2 = nn.Conv2d(dim//2, dim, 1, 1, 0, bias=True)
-#
-#         # self.conv_block = Localcnn_block(self.dim//2)
-#         # self.fuse = Fusion_adaptive()
-#     def forward(self, x):
-#         conv_x, trans_x = torch.split(self.conv1(x), (self.dim//2, self.dim//2), dim=1)
-#
-#         trans_x = self.trans_block(trans_x)
-#         conv_x = self.conv_block(conv_x)
-#
-#         MPMF_in = [trans_x, conv_x]
-#         x_fuse = self.fuse(MPMF_in)
-#
-#         res = self.conv2(x_fuse)
-#         out = x + res
-#
-#         return out
-
-
-##########################################################################
 ## Overlapped image patch embedding with 3x3 Conv
 class OverlapPatchEmbed(nn.Module):
     def __init__(self, in_c=3, embed_dim=48):
@@ -253,8 +183,6 @@ class OverlapPatchEmbed(nn.Module):
         return x
 
 
-##########################################################################
-## Resizing modules
 class Downsample(nn.Module):
     def __init__(self, n_feat):
         super(Downsample, self).__init__()
@@ -277,52 +205,17 @@ class Upsample(nn.Module):
         return self.body(x)
 
 
-#---------- Multi-path fusion module ----------
-# class EAFM(nn.Module):  # MPFM, 包含ECA
-#     def __init__(self, height=4, bias=False, k_size=3):
-#         super(EAFM, self).__init__()
-#
-#         self.height = height  # multi path
-#         self.k_size = k_size
-#
-#         self.avg_pool = nn.AdaptiveAvgPool2d(1)
-#         self.conv = nn.Conv1d(1, 1, kernel_size=k_size, padding=(k_size - 1) // 2, bias=bias)
-#
-#         self.softmax = nn.Softmax(dim=1)
-#
-#     def forward(self, inp_feats):
-#         batch_size = inp_feats[0].shape[0]
-#         n_feats = inp_feats[0].shape[1]
-#
-#         inp_feats = torch.cat(inp_feats, dim=1)
-#         inp_feats = inp_feats.view(batch_size, self.height, n_feats, inp_feats.shape[2], inp_feats.shape[3])  # b,4,c,h,w
-#
-#         feats_U = torch.sum(inp_feats, dim=1)
-#         feats_S = self.avg_pool(feats_U)
-#
-#         feats_Z = self.conv(feats_S.squeeze(-1).transpose(-1, -2)).transpose(-1, -2).unsqueeze(-1)
-#
-#         attention_vectors = [feats_Z, feats_Z, feats_Z, feats_Z]
-#         attention_vectors = torch.cat(attention_vectors, dim=1)
-#         attention_vectors = attention_vectors.view(batch_size, self.height, n_feats, 1, 1)
-#
-#         attention_vectors = self.softmax(attention_vectors)  #  b,4,c,1,1
-#         feats_V = torch.sum(inp_feats * attention_vectors, dim=1)
-#
-#         return feats_V
-
-
 #########################################################################
-class RCUNet(nn.Module):
+class MDDA_former(nn.Module):
     def __init__(self,
                  inp_channels=3,
                  out_channels=3,
-                 dim=48,
-                 num_blocks=[2, 6, 8, 10, 4, 3, 2],   # {dim=48, 2, 6, 8, 10, 4, 3, 2}  {dim=60, 3, 6, 6, 10, 6, 6, 3}
-                 heads=[1, 2, 4, 12],  #  {dim=32 or 64, heads[3]=8} {dim=48, heads[3]=12} {dim=60, heads[3]=10}
+                 dim=60,
+                 num_blocks=[3, 6, 6, 10, 6, 6, 3],   # {dim=48, 2, 6, 8, 10, 4, 3, 2}  {dim=60, 3, 6, 6, 10, 6, 6, 3}
+                 heads=[1, 2, 4, 10],  #  {dim=32 or 64, heads[3]=8} {dim=48, heads[3]=12} {dim=60, heads[3]=10}
                  ffn_expansion_factor=2,
                  bias=False):
-        super(RCUNet, self).__init__()
+        super(MDDA_former, self).__init__()
 
         self.patch_embed = OverlapPatchEmbed(inp_channels, dim)
 
@@ -355,7 +248,6 @@ class RCUNet(nn.Module):
         self.up2_1 = Upsample(int(dim * 2))  ## From Level 2 to Level 1
         self.decoder_level1 = nn.Sequential(
             *[Localcnn_block(int(dim * 2)) for i in range(num_blocks[6])])
-
 
         self.u1_ = nn.Conv2d(dim * 2, dim, 3, 1, 1, bias=bias)
         self.last = nn.Conv2d(dim, out_channels, 3, 1, 1, bias=False)
@@ -402,17 +294,6 @@ class RCUNet(nn.Module):
 
         u1_ = self.u1_(out_dec_level1)
 
-        # MPFM_in = [u4_, u3_, u2_, u1_]
-        # MPFM_out = self.final_ff(MPFM_in)
-
         output = self.last(u1_) + inp_img
 
         return output
-
-
-if __name__ == "__main__":
-
-    model = RCUNet()
-
-    flops, params = get_model_complexity_info(model, (3, 256, 256), as_strings=True, print_per_layer_stat=True)  # 输入是元组，且不需要batch
-    print('flops: ', flops, 'params: ', params)

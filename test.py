@@ -9,10 +9,10 @@ from collections import OrderedDict
 from natsort import natsorted
 from glob import glob
 
-from model.MDDA import RCUNet
+from model.MDDA_former import MDDA_former
 from skimage import img_as_ubyte
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "5"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 def load_checkpoint(model, weights):
     checkpoint = torch.load(weights, map_location='cuda:0')
@@ -29,19 +29,19 @@ def load_checkpoint(model, weights):
 
 parser = argparse.ArgumentParser(description='Image Deraining')
 
-parser.add_argument('--input_dir', default='../data/Derain/', type=str, help='Directory of validation images')  # Raindrop , Rain13K/test
-parser.add_argument('--result_dir', default='../Results/Deraining', type=str, help='Directory for results')
-parser.add_argument('--weights', default='../checkpoints/Gaussian/models/model_latest.pth', type=str, help='Path to weights')  # model_bestPSNR_raindrop
+parser.add_argument('--input_dir', default='./data/Derain/', type=str, help='Directory of validation images')  # Raindrop , Rain13K/test
+parser.add_argument('--result_dir', default='./Results/Deraining', type=str, help='Directory for results')
+parser.add_argument('--weights', default='./checkpoints/Gaussian/models/model_latest.pth', type=str, help='Path to weights')  # model_bestPSNR_raindrop
 
 
 args = parser.parse_args()
 
-model = RCUNet()
+model = MDDA_former()
 model.cuda()
 load_checkpoint(model, args.weights)
 model.eval()
 
-factor = 8  # 主要看有几层
+factor = 8  
 datasets = ['200','Rain100L', 'Rain100H', 'Test100', 'Test1200', 'Test2800']   # 'Rain100L', 'Rain100H', 'Test100', 'Test1200', 'Test2800' //  'test_a', 'test_b'
 
 for dataset in datasets:

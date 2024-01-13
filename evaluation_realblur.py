@@ -1,7 +1,3 @@
-## Restormer: Efficient Transformer for High-Resolution Image Restoration
-## Syed Waqas Zamir, Aditya Arora, Salman Khan, Munawar Hayat, Fahad Shahbaz Khan, and Ming-Hsuan Yang
-## https://arxiv.org/abs/2111.09881
-
 import os
 import numpy as np
 from glob import glob
@@ -99,8 +95,8 @@ datasets = ['RealBlur_R', 'RealBlur_J']
 
 for dataset in datasets:
 
-    file_path = os.path.join('../Results', 'Deblur', dataset)
-    gt_path = os.path.join('../data/Deblur', 'test', dataset, 'target')
+    file_path = os.path.join('./Results', 'Deblur', dataset)
+    gt_path = os.path.join('./data/Deblur', 'test', dataset, 'target')
 
     path_list = natsorted(glob(os.path.join(file_path, '*.png')) + glob(os.path.join(file_path, '*.jpg')))
     gt_list = natsorted(glob(os.path.join(gt_path, '*.png')) + glob(os.path.join(gt_path, '*.jpg')))

@@ -18,8 +18,8 @@ def calc_ssim(im1, im2):
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input_dir", default='../Results/Deraining/test_a', type=str)
-    parser.add_argument("--gt_dir", default='../data/Derain/Raindrop/test_a/target', type=str)
+    parser.add_argument("--input_dir", default='./Results/Deraining/test_a', type=str)
+    parser.add_argument("--gt_dir", default='./data/Derain/Raindrop/test_a/target', type=str)
     args = parser.parse_args()
     return args
 

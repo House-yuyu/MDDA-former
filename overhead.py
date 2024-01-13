@@ -5,12 +5,7 @@ import torch
 from torchprofile import profile_macs
 from thop import profile
 from collections import OrderedDict
-from model.MDDA import RCUNet
-from test827 import fftformer
-
-# from model.SIDD_mask import RCUNet
-from model.Uformer import Uformer
-from model.AFD_former import AFD_Net
+from model.MDDA_former import MDDA_former
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--device', default='cuda:3', type=str, help='test device')
@@ -23,7 +18,7 @@ if __name__ == '__main__':
     test_iter = [100]
     test_epoch = 5
 
-    network = AFD_Net()
+    network = MDDA_former()
     network.to(args.device)
     network.eval()
 
@@ -31,7 +26,7 @@ if __name__ == '__main__':
     # macs_G = macs / (1024 ** 3)
 
     flops, params = profile(network, inputs=(torch.rand([1, 3, 256, 256]).to(args.device),))
-    params_M = params / (1000 ** 2)  # 1024
+    params_M = params / (1000 ** 2)  
     flops_G = flops / (1000 ** 3)
 
     with torch.no_grad():
