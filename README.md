@@ -1,6 +1,6 @@
 # :fire: Joint multi-dimensional dynamic attention and transformer for general image restoration (CVIU'2025)
 
-> [[CVIU](https://www.sciencedirect.com/science/article/abs/pii/S1077314225002140)] &emsp; [[arxiv](https://arxiv.org/abs/2408.15994)]]
+> [[CVIU](https://www.sciencedirect.com/science/article/abs/pii/S1077314225002140)] &emsp; [[arxiv](https://arxiv.org/abs/2408.15994)]
 
 This is the official PyTorch codes for the paper:
 
