@@ -1,10 +1,10 @@
-# :fire: Joint multi-dimensional dynamic attention and transformer for general image restoration (CVIU'2025)
+# :fire: Joint Multi-dimensional Dynamic Attention and Transformer for General Image Restoration (CVIU'2025)
 
 > [[CVIU](https://www.sciencedirect.com/science/article/abs/pii/S1077314225002140)] &emsp; [[arxiv](https://arxiv.org/abs/2408.15994)]
 
 This is the official PyTorch codes for the paper:
 
->**Joint multi-dimensional dynamic attention and transformer for general image restoration**<br>
+>**Joint Multi-dimensional Dynamic Attention and Transformer for General Image Restoration**<br>
 [Huan Zhang<sup>1</sup>](https://house-yuyu.github.io/), [Xu Zhang<sup>2📧</sup>](https://house-yuyu.github.io/), [Nian Cai<sup>1📧</sup>](https://scholar.google.com.hk/citations?hl=zh-CN&user=hxDRrEQAAAAJ&hl=zh-CN), [Jianglei Di<sup>1</sup>](https://scholar.google.com.hk/citations?user=QlJKQxEAAAAJ&hl=zh-CN), [Yun Zhang<sup>3</sup>](https://scholar.google.com.hk/citations?user=tZp-uVoAAAAJ&hl=zh-CN)<br>
 > <sup>1</sup> Guangdong University of Technology <sup>2</sup> Wuhan University <sup>3</sup> Sun Yat-sen University<br>
 > <sup>📧</sup> Corresponding author
