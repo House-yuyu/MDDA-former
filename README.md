@@ -6,7 +6,7 @@ This is the official PyTorch codes for the paper:
 
 >**Joint Multi-dimensional Dynamic Attention and Transformer for General Image Restoration**<br>
 [Huan Zhang<sup>1</sup>](https://house-yuyu.github.io/), [Xu Zhang<sup>2📧</sup>](https://house-yuyu.github.io/), [Nian Cai<sup>1📧</sup>](https://scholar.google.com.hk/citations?hl=zh-CN&user=hxDRrEQAAAAJ&hl=zh-CN), [Jianglei Di<sup>1</sup>](https://scholar.google.com.hk/citations?user=QlJKQxEAAAAJ&hl=zh-CN), [Yun Zhang<sup>3</sup>](https://scholar.google.com.hk/citations?user=tZp-uVoAAAAJ&hl=zh-CN)<br>
-> <sup>1</sup> Guangdong University of Technology <sup>2</sup> Wuhan University <sup>3</sup> Sun Yat-sen University<br>
+> <sup>1</sup>Guangdong University of Technology, <sup>2</sup>Wuhan University, <sup>3</sup>Sun Yat-sen University<br>
 > <sup>📧</sup> Corresponding author
 
 ![teaser_img](assets/model.png)
