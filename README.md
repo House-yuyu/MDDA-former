@@ -9,7 +9,7 @@ This is the official PyTorch codes for the paper:
 > <sup>1</sup> Guangdong University of Technology <sup>2</sup> Wuhan University <sup>3</sup> Sun Yat-sen University<br>
 > <sup>📧</sup> Corresponding author
 
-![teaser_img](fig/PerceiveIR_Stage2.png)
+![teaser_img](assets/model.png)
 
 
 :star: If MDDA-former is helpful to your images or projects, please help star this repo. Thank you! :point_left:
