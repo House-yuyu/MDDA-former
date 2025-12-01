@@ -1,6 +1,34 @@
-## Joint multi-dimensional dynamic attention and transformer for efficient image restoration (in submission)
+# :fire: Joint multi-dimensional dynamic attention and transformer for general image restoration (CVIU'2025)
 
-[Huan Zhang](https://scholar.google.com.hk/citations?user=bJjd_kMAAAAJ&hl=zh-CN)<sup>1</sup>, [Xu Zhang](https://scholar.google.com.hk/citations?hl=zh-CN&view_op=list_works&gmla=AH70aAWtx1iZq4HKxDbyL0qpc4nqAVPwQVafhr159vwV-LmLTU-ZMvIXpISZyLzsQSyy2mrN3QOg_n074egb6n7BNFKNIBI&user=xDDy-DwAAAAJ)<sup>1</sup>, [Nian Cai](https://scholar.google.com.hk/citations?hl=zh-CN&user=hxDRrEQAAAAJ&view_op=list_works)<sup>1</sup>, [Jianglei Di](https://scholar.google.com.hk/citations?user=QlJKQxEAAAAJ&hl=zh-CN)<sup>1</sup>, [Yun Zhang](https://scholar.google.com.hk/citations?user=tZp-uVoAAAAJ&hl=zh-CN)<sup>2</sup>, [Weisi Lin](https://scholar.google.com.hk/citations?user=D_S41X4AAAAJ&hl=zh-CN)<sup>3</sup>,  
-<sup>1</sup>Guangdong University of Technology, <sup>2</sup>Sun Yat-sen University, <sup>3</sup>Nanyang Technological University.
+> [[CVIU](https://www.sciencedirect.com/science/article/abs/pii/S1077314225002140)] &emsp; [[arxiv](https://arxiv.org/abs/2408.15994)]]
 
+This is the official PyTorch codes for the paper:
+
+>**Joint multi-dimensional dynamic attention and transformer for general image restoration**<br>
+[Huan Zhang<sup>1</sup>](https://house-yuyu.github.io/), [Xu Zhang<sup>2📧</sup>](https://house-yuyu.github.io/), [Nian Cai<sup>1📧</sup>](https://scholar.google.com.hk/citations?hl=zh-CN&user=hxDRrEQAAAAJ&hl=zh-CN), [Jianglei Di<sup>1</sup>](https://scholar.google.com.hk/citations?user=QlJKQxEAAAAJ&hl=zh-CN), [Yun Zhang<sup>3</sup>](https://scholar.google.com.hk/citations?user=tZp-uVoAAAAJ&hl=zh-CN)<br>
+> <sup>1</sup> Guangdong University of Technology <sup>2</sup> Wuhan University <sup>3</sup> Sun Yat-sen University<br>
+> <sup>📧</sup> Corresponding author
+
+![teaser_img](fig/PerceiveIR_Stage2.png)
+
+
+:star: If MDDA-former is helpful to your images or projects, please help star this repo. Thank you! :point_left:
+
+
+## :book: Citation
+
+If you find our repo useful for your research, please consider citing our paper:
+
+```bibtex
+@article{MDDAformer,
+title = {Joint multi-dimensional dynamic attention and transformer for general image restoration},
+journal = {Computer Vision and Image Understanding},
+volume = {261},
+pages = {104491},
+year = {2025}}
+```
+
+## :postbox: Contact
+
+If you have any questions, please feel free to reach us out at <a href="zhangx0802@whu.edu.cn">zhangx0802@whu.edu.cn</a>.
 
