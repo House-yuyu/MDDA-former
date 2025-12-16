@@ -22,6 +22,7 @@ If you find our repo useful for your research, please consider citing our paper:
 ```bibtex
 @article{MDDAformer,
 title = {Joint multi-dimensional dynamic attention and transformer for general image restoration},
+author = {Huan Zhang and Xu Zhang and Nian Cai and Jianglei Di and Yun Zhang},
 journal = {Computer Vision and Image Understanding},
 volume = {261},
 pages = {104491},
